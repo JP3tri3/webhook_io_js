@@ -1,0 +1,26 @@
+{
+  "name": "webhook_io_js",
+  "version": "1.0.0",
+  "description": "webhook io handler application",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JP3tri3/webhook_io_js.git"
+  },
+  "keywords": [
+    "webhook",
+    "exchange"
+  ],
+  "author": "JP3tri3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JP3tri3/webhook_io_js/issues"
+  },
+  "homepage": "https://github.com/JP3tri3/webhook_io_js#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
