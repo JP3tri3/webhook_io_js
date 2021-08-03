@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Webhook = require('./models/webhook');
 const User = require('./models/user');
+const dbLogic = require('./db-logic.js')
 
 const app = express()
 app.use(express.json())
@@ -20,48 +21,8 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
         }))
     .catch((err) => console.log(err));
 
-app.get('/test-webhook', (req, res) => {
-    const webhook = new Webhook({
-        symbol: 'ETH',
-        trigger: 'test trigger'
-    })
 
-    webhook.save()
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            console.log(err)
-        });
-});
 
-const getAllWebhooks = () => {
-    Webhook.find()
-        .then((result) => {
-            console.log(result)
-        })
-}
-getAllWebhooks()
-
-app.get('/single-webhook', (req, res) => {
-    Webhook.findById('61098eb48bd70f5b20fde951')
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            console.log(err)
-        });
-});
-
-app.get('/all-webhooks', (req, res) => {
-    Webhook.find()
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err)
-        });
-});
 
 
 app.post("/webhook", (req, res) => {
