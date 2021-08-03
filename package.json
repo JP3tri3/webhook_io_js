@@ -22,6 +22,7 @@
   "homepage": "https://github.com/JP3tri3/webhook_io_js#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "mongodb": "^4.0.1",
     "mongoose": "^5.13.5"

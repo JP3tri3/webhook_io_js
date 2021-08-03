@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Webhook = require('./models/webhook');
-const User = require('./models/user');
-const dbLogic = require('./db-logic.js')
+const dbLogic = require('./controller/db-logic.js');
+const fs = require('fs');
+const _ = require('lodash');
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
+app.set('view engine', 'ejs');
+
 require('dotenv').config()
 
 const PORT = process.env.PORT;
@@ -22,12 +24,27 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.log(err));
 
 
-
-
-
 app.post("/webhook", (req, res) => {
-    handle_webhook(req, res)
+    handle_webhook(req, res);
 })
+
+app.get('/', (req, res) => {
+    res.render('index');
+})
+
+app.get('/about', (req, res) => {
+    res.render('about');
+})
+
+app.get('/users/new', (req, res) => {
+    res.render('create')
+})
+
+app.use((req, res) => {
+    res.status(404).res.render('404');
+})
+
+
 
 const handle_webhook = (req, res) => {
     let incomingData = req.body
