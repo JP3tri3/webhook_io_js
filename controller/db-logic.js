@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Webhook = require('./models/webhook');
-const User = require('./models/user');
+const Webhook = require('../models/webhook');
+const User = require('../models/user');
 
 const storeWebhook = (app) => {
     app.get('/test-webhook', (req, res) => {
