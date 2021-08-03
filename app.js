@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Webhook = require('./models/webhook');
-const User = require('./models/user');
 const dbLogic = require('./db-logic.js')
+const fs = require('fs')
+const _ = require('lodash')
 
 const app = express()
 app.use(express.json())
@@ -23,10 +23,20 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 
+app.get('/', (req, res) => {
+    res.sendFile('./views/index.html', { root: __dirname });
+})
 
+app.get('/about', (req, res) => {
+    res.sendFile('./views/about.html', { root: __dirname });
+})
+
+app.use((req, res) => {
+    res.sendFile('./views/404.html', { root: __dirname })
+})
 
 app.post("/webhook", (req, res) => {
-    handle_webhook(req, res)
+    handle_webhook(req, res);
 })
 
 const handle_webhook = (req, res) => {
