@@ -3,7 +3,8 @@
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width-device-width, initial-scale=1.0'>
-    <title>Hook I/O</title>
+    <title>Hook I/O | <%= title %>
+    </title>
 </head>
 
 <body>
@@ -23,6 +24,19 @@
 
     <div class='filler content'>
         <h2>Insert Filler</h2>
+
+        <% if (testInput.length> 0) { %>
+            <% testInput.forEach(testInput=> { %>
+                <h3 class='title'>
+                    <%= testInput.title %>
+                </h3>
+                <p class='snippet'>
+                    <%= testInput.snippet %>
+                </p>
+                <%}) %>
+                    <% } else { %>
+                        <p>Nothing to display</p>
+                        <% } %>
     </div>
 
 </body>

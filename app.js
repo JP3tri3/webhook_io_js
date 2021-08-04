@@ -29,19 +29,24 @@ app.post("/webhook", (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { title: 'Home' });
 })
 
 app.get('/about', (req, res) => {
-    res.render('about');
+    const testInput = [
+        { title: "title 1", snippet: 'content 1' },
+        { title: "title 2", snippet: 'content 2' },
+    ];
+
+    res.render('about', { title: 'About', testInput });
 })
 
 app.get('/users/new', (req, res) => {
-    res.render('create')
+    res.render('create', { title: 'New User' })
 })
 
 app.use((req, res) => {
-    res.status(404).res.render('404');
+    res.status(404).res.render('404', { title: '404' });
 })
 
 
