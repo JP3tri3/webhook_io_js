@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dbLogic = require('./controller/db-logic.js');
 const fs = require('fs');
 const _ = require('lodash');
+const morgan = require('morgan');
 
 const app = express();
 app.use(express.json());
@@ -23,14 +24,24 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
         }))
     .catch((err) => console.log(err));
 
+app.use(express.static('public'));
+app.use(morgan('dev'));
+
+// app.use((req, res, next) => {
+//     console.log('new request made: ');
+//     console.log('host ', req.hostname);
+//     console.log('path: ', req.path);
+//     console.log('method: ', req.method);
+//     next();
+// });
 
 app.post("/webhook", (req, res) => {
     handle_webhook(req, res);
-})
+});
 
 app.get('/', (req, res) => {
     res.render('index', { title: 'Home' });
-})
+});
 
 app.get('/about', (req, res) => {
     const testInput = [
@@ -39,15 +50,15 @@ app.get('/about', (req, res) => {
     ];
 
     res.render('about', { title: 'About', testInput });
-})
+});
 
 app.get('/users/new', (req, res) => {
     res.render('create', { title: 'New User' })
-})
+});
 
 app.use((req, res) => {
-    res.status(404).res.render('404', { title: '404' });
-})
+    res.status(404).render('404', { title: '404' });
+});
 
 
 
@@ -60,15 +71,15 @@ const handle_webhook = (req, res) => {
         return res.status(200).send({
             "code": "success",
             "message": "payload processed"
-        })
+        });
 
     } else {
         console.log("Unauthorized passphrase", incomingData)
         return res.status(403).send({
             "code": "error",
             "message": "Invalid Passphrase"
-        })
+        });
 
 
-    }
-}
+    };
+};
