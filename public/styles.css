@@ -18,6 +18,12 @@ ul {
     color: #222;
 }
 
+.title {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2.5em;
+}
+
 nav {
     display: flex;
     justify-content: space-between;

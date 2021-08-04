@@ -57,7 +57,7 @@ app.get('/users/new', (req, res) => {
 });
 
 app.use((req, res) => {
-    res.status(404).res.render('404', { title: '404' });
+    res.status(404).render('404', { title: '404' });
 });
 
 
