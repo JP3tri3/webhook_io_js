@@ -56,6 +56,10 @@ app.get('/users/new', (req, res) => {
     res.render('create', { title: 'New User' })
 });
 
+app.get('/feedback', (req, res) => {
+    res.render('create', { title: 'Feedback' })
+});
+
 app.use((req, res) => {
     res.status(404).render('404', { title: '404' });
 });
