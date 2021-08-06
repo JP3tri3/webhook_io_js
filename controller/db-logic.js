@@ -1,7 +1,5 @@
-const mongoose = require('mongoose')
 const Webhook = require('../models/webhook');
 const Feedback = require('../models/feedback');
-const User = require('../models/user');
 
 const storeFeedback = (args, res) => {
 
