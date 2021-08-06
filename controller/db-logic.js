@@ -1,6 +1,24 @@
 const mongoose = require('mongoose')
 const Webhook = require('../models/webhook');
+const Feedback = require('../models/feedback');
 const User = require('../models/user');
+
+const storeFeedback = (args, res) => {
+
+    const feedback = new Feedback({
+        email: args.email,
+        subject: args.subject,
+        body: args.body
+    })
+
+    feedback.save()
+        .then((result) => {
+            res.redirect('/feedback')
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+}
 
 const storeWebhook = (app) => {
     app.get('/test-webhook', (req, res) => {
@@ -56,4 +74,4 @@ const getWebhookByID = (app, id) => {
 
 
 
-module.exports = { storeWebhook, getAllWebhooks, getAllWebhooksRoute, getWebhookByID }
+module.exports = { storeFeedback, storeWebhook, getAllWebhooks, getAllWebhooksRoute, getWebhookByID }
