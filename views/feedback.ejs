@@ -5,22 +5,17 @@
     <body>
 
         <%- include('./partials/nav.ejs') %>
-            <div class='title'>Feedback</div>
-            <div class='filler content'>
-                <h2>Insert Filler</h2>
-
-                <% if (testInput.length> 0) { %>
-                    <% testInput.forEach(testInput=> { %>
-                        <h3 class='title'>
-                            <%= testInput.title %>
-                        </h3>
-                        <p class='snippet'>
-                            <%= testInput.snippet %>
-                        </p>
-                        <%}) %>
-                            <% } else { %>
-                                <p>Nothing to display</p>
-                                <% } %>
+            <div class='title'>Help Center</div>
+            <div class='create-user content'>
+                <form action='/feedback' method='POST'>
+                    <label for='email'>Email Address:</label>
+                    <input type='text' id='email' name='email' required>
+                    <label for='title'>Subject:</label>
+                    <input type='text' id='subject' name='subject' required>
+                    <label for='body'>Feedback:</label>
+                    <textarea id='body' name='body' required></textarea>
+                    <button>Submit</button>
+                </form>
             </div>
 
             <%- include('./partials/footer.ejs') %>

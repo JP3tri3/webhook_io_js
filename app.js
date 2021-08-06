@@ -25,6 +25,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.log(err));
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // app.use((req, res, next) => {
@@ -52,8 +53,17 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About', testInput });
 });
 
-app.get('/users/new', (req, res) => {
-    res.render('create', { title: 'New User' })
+app.get('/sign-up', (req, res) => {
+    res.render('sign-up', { title: 'Sign Up' })
+});
+
+app.get('/feedback', (req, res) => {
+    res.render('feedback', { title: 'Feedback' })
+});
+
+app.post('/feedback', (req, res) => {
+    console.log(req.body)
+    dbLogic.storeFeedback(req.body, res)
 });
 
 app.use((req, res) => {
