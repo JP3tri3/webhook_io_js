@@ -4,7 +4,7 @@ const User = require('../models/user');
 module.exports = function (args, res) {
 
     if (args.password !== args.confirmPassword) {
-        
+
 
     } else {
         console.log('nope')
@@ -20,7 +20,7 @@ module.exports = function (args, res) {
 
     user.save()
         .then((result) => {
-            res.redirect('/sign-in')
+            res.redirect('/signin')
         })
         .catch((err) => {
             console.log(err)

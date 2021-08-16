@@ -1,0 +1,18 @@
+<div class='response-message'>
+    <% if (typeof errorMessage !=='undefined' ) { %>
+        <div class='error-message'>
+            <p>Unable to complete due to the following error:</p>
+            <p>
+                <%= errorMessage %>
+            </p>
+        </div>
+
+        <% } if (typeof successMessage !=='undefined' ){ %>
+            <div class='success-message'>
+                <p>Success:</p>
+                <p>
+                    <%= successMessage %>
+                </p>
+            </div>
+            <% } %>
+</div>

@@ -11,10 +11,6 @@ const userSchema = new Schema({
         required: true,
         max: 32
     },
-    confirmPassword: {
-        type: String,
-        required: true
-    },
     resetLink: {
         data: String,
         default: ''

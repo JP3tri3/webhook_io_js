@@ -5,11 +5,12 @@ const fs = require('fs');
 const _ = require('lodash');
 const morgan = require('morgan');
 
-const dbLogic = require('./controllers/dbLogic');
 const handleFeedback = require('./controllers/handleFeedback')
-const createUser = require('./controllers/createUser')
 
 const app = express();
+
+const authRoutes = require('./routes/auth');
+
 app.use(express.json());
 app.use(cors());
 app.set('view engine', 'ejs');
@@ -18,17 +19,12 @@ require('dotenv').config()
 require('./db/connectDB')
 
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
-const PORT = process.env.PORT;
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
-
-
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+app.use('/api', authRoutes);
 
 // app.use((req, res, next) => {
 //     console.log('new request made: ');
@@ -55,16 +51,16 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About', testInput });
 });
 
-app.get('/sign-up', (req, res) => {
-    res.render('sign-up', { title: 'Sign Up' })
-});
+// app.get('/sign-up', (req, res) => {
+//     res.render('sign-up', { title: 'Sign Up' })
+// });
 
-app.post('/sign-up', (req, res) => {
-    createUser(req.body, res)
-})
+// app.post('/sign-up', (req, res) => {
+//     createUser(req.body, res)
+// })
 
-app.get('/sign-in', (req, res) => {
-    res.render('sign-in', { title: 'Sign In' })
+app.get('/signin', (req, res) => {
+    res.render('signin', { title: 'Sign In' })
 });
 
 app.get('/feedback', (req, res) => {
@@ -80,7 +76,10 @@ app.use((req, res) => {
     res.status(404).render('404', { title: '404' });
 });
 
-
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
 const handle_webhook = (req, res) => {
     let incomingData = req.body

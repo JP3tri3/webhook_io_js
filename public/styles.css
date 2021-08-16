@@ -104,3 +104,20 @@ textarea {
     font-size: 1.2em;
     cursor: pointer;
 }
+
+.response-message {
+    margin-top: 20px;
+}
+.error-message p {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+    color: red;
+}
+
+.success-message p {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+    color: green;
+}
