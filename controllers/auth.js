@@ -22,7 +22,7 @@ exports.signup = (req, res) => {
                 .then((result) => {
                     console.log("Signup Success!")
                     res.render('signin', {
-                        title: "Sign In",
+                        title: 'Sign in',
                         successMessage: "User account successfully created!"
                     })
                 })
@@ -36,4 +36,8 @@ exports.signup = (req, res) => {
         }
 
     });
+}
+
+exports.signin = (req, res) => {
+    console.log("Successfully signed in")
 }

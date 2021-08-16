@@ -24,7 +24,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-app.use('/api', authRoutes);
+app.use('/auth', authRoutes);
 
 // app.use((req, res, next) => {
 //     console.log('new request made: ');
@@ -59,9 +59,9 @@ app.get('/about', (req, res) => {
 //     createUser(req.body, res)
 // })
 
-app.get('/signin', (req, res) => {
-    res.render('signin', { title: 'Sign In' })
-});
+// app.get('/signin', (req, res) => {
+//     res.render('signin', { title: 'Sign In' })
+// });
 
 app.get('/feedback', (req, res) => {
     res.render('feedback', { title: 'Feedback' })
