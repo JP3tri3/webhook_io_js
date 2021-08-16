@@ -5,12 +5,13 @@ const fs = require('fs');
 const _ = require('lodash');
 const morgan = require('morgan');
 
-const dbLogic = require('./controller/dbLogic');
-const handleFeedback = require('./controller/handleFeedback')
-const createUser = require('./controller/createUser')
+const dbLogic = require('./controllers/dbLogic');
+const handleFeedback = require('./controllers/handleFeedback')
+const createUser = require('./controllers/createUser')
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.set('view engine', 'ejs');
 
 require('dotenv').config()
