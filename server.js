@@ -1,34 +1,30 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const cors = require('cors');
+
 const fs = require('fs');
 const _ = require('lodash');
 const morgan = require('morgan');
 
-const dbLogic = require('./controller/db-logic.js');
-const handleFeedback = require('./controller/handleFeedback.js')
+const handleFeedback = require('./controllers/handleFeedback')
 
 const app = express();
+
+const authRoutes = require('./routes/auth');
+
 app.use(express.json());
+app.use(cors());
 app.set('view engine', 'ejs');
 
 require('dotenv').config()
+require('./db/connectDB')
 
-const PORT = process.env.PORT;
 const AUTH_TOKEN = process.env.AUTH_TOKEN;
-
-const dbURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.nxe5s.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log('connected to database'))
-    .then((result) =>
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`)
-        }))
-    .catch((err) => console.log(err));
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+app.use('/api', authRoutes);
 
 // app.use((req, res, next) => {
 //     console.log('new request made: ');
@@ -55,12 +51,16 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About', testInput });
 });
 
-app.get('/sign-up', (req, res) => {
-    res.render('sign-up', { title: 'Sign Up' })
-});
+// app.get('/sign-up', (req, res) => {
+//     res.render('sign-up', { title: 'Sign Up' })
+// });
 
-app.get('/sign-in', (req, res) => {
-    res.render('sign-in', { title: 'Sign In' })
+// app.post('/sign-up', (req, res) => {
+//     createUser(req.body, res)
+// })
+
+app.get('/signin', (req, res) => {
+    res.render('signin', { title: 'Sign In' })
 });
 
 app.get('/feedback', (req, res) => {
@@ -76,7 +76,10 @@ app.use((req, res) => {
     res.status(404).render('404', { title: '404' });
 });
 
-
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
 const handle_webhook = (req, res) => {
     let incomingData = req.body

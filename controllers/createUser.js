@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
-const confirmUserAccount = (args, res) => {
+module.exports = function (args, res) {
+
+    if (args.password !== args.confirmPassword) {
+
+
+    } else {
+        console.log('nope')
+    }
 
     const user = new User({
         email: args.email,
@@ -13,7 +20,7 @@ const confirmUserAccount = (args, res) => {
 
     user.save()
         .then((result) => {
-            res.redirect('/feedback')
+            res.redirect('/signin')
         })
         .catch((err) => {
             console.log(err)
