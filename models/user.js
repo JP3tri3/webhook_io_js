@@ -8,13 +8,18 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        max: 32
     },
     confirmPassword: {
         type: String,
         required: true
+    },
+    resetLink: {
+        data: String,
+        default: ''
     }
-});
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
