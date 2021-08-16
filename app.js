@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dbLogic = require('./controller/db-logic.js');
 const fs = require('fs');
 const _ = require('lodash');
 const morgan = require('morgan');
+
+const dbLogic = require('./controller/db-logic.js');
+const handleFeedback = require('./controller/handleFeedback.js')
 
 const app = express();
 app.use(express.json());
@@ -57,13 +59,17 @@ app.get('/sign-up', (req, res) => {
     res.render('sign-up', { title: 'Sign Up' })
 });
 
+app.get('/sign-in', (req, res) => {
+    res.render('sign-in', { title: 'Sign In' })
+});
+
 app.get('/feedback', (req, res) => {
     res.render('feedback', { title: 'Feedback' })
 });
 
 app.post('/feedback', (req, res) => {
     console.log(req.body)
-    dbLogic.storeFeedback(req.body, res)
+    handleFeedback(req.body, res)
 });
 
 app.use((req, res) => {
