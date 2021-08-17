@@ -39,5 +39,28 @@ exports.signup = (req, res) => {
 }
 
 exports.signin = (req, res) => {
-    console.log("Successfully signed in")
+    console.log(req.body);
+    const { email, password } = req.body;
+
+
+    User.findOne({ email }).exec((err, user) => {
+        if (user) {
+            let checkPassword = (password === user.password)
+            checkPassword ?
+                res.render('signin', {
+                    title: 'Sign in',
+                    successMessage: "Successful Signin"
+                })
+                : res.render('signin', {
+                    title: 'Sign in',
+                    errorMessage: "Incorrect Password"
+                })
+        } else {
+            res.render('signin', {
+                title: 'Sign in',
+                errorMessage: "Invalid Email Address"
+            })
+        }
+
+    })
 }
