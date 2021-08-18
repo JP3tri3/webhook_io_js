@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const confirmPassword = require('../services/confirmPassword');
+const emailFormat = require('../services/confirmEmailFormat');
 const mail = require('./mail');
 
 // mail.generateVerificationEmail('test1234');
@@ -14,8 +15,15 @@ exports.signup = (req, res) => {
                 title: "Sign Up",
                 errorMessage: "Email address already exists."
             });
+
+        } else if (!emailFormat(email)) {
+            res.render('signup', {
+                title: "Sign Up",
+                errorMessage: "Email address is not a valid format"
+            });
+
         } else if (password != confirmPassword) {
-            console.log("Passwords do not match.");
+
             res.render('signup', {
                 title: "Sign Up",
                 errorMessage: "Passwords do not match!"
@@ -39,9 +47,7 @@ exports.signup = (req, res) => {
                         errorMessage: err
                     });
                 });
-
         }
-
     });
 }
 
@@ -52,7 +58,7 @@ exports.signin = (req, res) => {
 
         User.findOne({ email }).exec((err, user) => {
             if (user) {
-                let checkPassword = confirmPassword.decrypt(password, user.password);
+                let checkPassword = confirmPassword(password, user.password);
 
                 checkPassword ?
                     res.render('signin', {
