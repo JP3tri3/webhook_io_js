@@ -1,11 +1,12 @@
 const User = require('../models/user');
-const mail = require('./mail')
+const confirmPassword = require('../services/confirmPassword');
+const mail = require('./mail');
 
-mail.generateVerificationEmail('test1234');
+// mail.generateVerificationEmail('test1234');
 
 exports.signup = (req, res) => {
     console.log(req.body);
-    const { email, password, confirmPassword } = req.body;
+    let { email, password, confirmPassword } = req.body;
     User.findOne({ email }).exec((err, user) => {
         if (user) {
             console.log("Error: User with this email already exists.");
@@ -20,14 +21,16 @@ exports.signup = (req, res) => {
                 errorMessage: "Passwords do not match!"
             });
         } else {
+
             let newUser = new User({ email, password });
+
             newUser.save()
                 .then((result) => {
                     console.log("Signup Success!")
                     res.render('signin', {
                         title: 'Sign in',
                         successMessage: "User account successfully created!"
-                    })
+                    });
                 })
                 .catch((err) => {
                     console.log("Error in signup: ", err);
@@ -36,6 +39,7 @@ exports.signup = (req, res) => {
                         errorMessage: err
                     });
                 });
+
         }
 
     });
@@ -48,7 +52,8 @@ exports.signin = (req, res) => {
 
         User.findOne({ email }).exec((err, user) => {
             if (user) {
-                let checkPassword = (password === user.password)
+                let checkPassword = confirmPassword.decrypt(password, user.password);
+
                 checkPassword ?
                     res.render('signin', {
                         title: 'Sign in',

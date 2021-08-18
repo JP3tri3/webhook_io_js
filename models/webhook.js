@@ -2,7 +2,7 @@ const { json } = require('express');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const webhookSchema = new Schema({
+const WebhookSchema = new Schema({
     symbol: {
         type: String,
         required: true
@@ -13,5 +13,5 @@ const webhookSchema = new Schema({
     }
 }, { timestamps: true });
 
-const Webhook = mongoose.model('Webhook', webhookSchema);
+const Webhook = mongoose.model('Webhook', WebhookSchema);
 module.exports = Webhook;
