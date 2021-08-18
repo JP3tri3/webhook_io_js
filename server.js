@@ -51,18 +51,6 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About', testInput });
 });
 
-// app.get('/sign-up', (req, res) => {
-//     res.render('sign-up', { title: 'Sign Up' })
-// });
-
-// app.post('/sign-up', (req, res) => {
-//     createUser(req.body, res)
-// })
-
-// app.get('/signin', (req, res) => {
-//     res.render('signin', { title: 'Sign In' })
-// });
-
 app.get('/feedback', (req, res) => {
     res.render('feedback', { title: 'Feedback' })
 });

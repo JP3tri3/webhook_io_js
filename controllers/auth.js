@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const mail = require('./mail')
+
+mail.generateVerificationEmail('test1234');
 
 exports.signup = (req, res) => {
     console.log(req.body);
@@ -39,28 +42,31 @@ exports.signup = (req, res) => {
 }
 
 exports.signin = (req, res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
+    try {
+        console.log(req.body);
+        const { email, password } = req.body;
 
-
-    User.findOne({ email }).exec((err, user) => {
-        if (user) {
-            let checkPassword = (password === user.password)
-            checkPassword ?
+        User.findOne({ email }).exec((err, user) => {
+            if (user) {
+                let checkPassword = (password === user.password)
+                checkPassword ?
+                    res.render('signin', {
+                        title: 'Sign in',
+                        successMessage: "Successful Signin"
+                    })
+                    : res.render('signin', {
+                        title: 'Sign in',
+                        errorMessage: "Incorrect Password"
+                    })
+            } else {
                 res.render('signin', {
                     title: 'Sign in',
-                    successMessage: "Successful Signin"
+                    errorMessage: "Invalid Email Address"
                 })
-                : res.render('signin', {
-                    title: 'Sign in',
-                    errorMessage: "Incorrect Password"
-                })
-        } else {
-            res.render('signin', {
-                title: 'Sign in',
-                errorMessage: "Invalid Email Address"
-            })
-        }
+            }
 
-    })
+        })
+    } catch (err) {
+        console.log(err)
+    }
 }
